@@ -16,9 +16,11 @@ def main():
 
     print("Players from FIN\n")
 
-    for player in players:
-        if player.nationality == "FIN":
-            print(player)
+    suomalaiset_players = filter(lambda player: player.nationality == "FIN", players)
+    sortatut_suomalaiset_players = sorted(suomalaiset_players, key=lambda player: player.points, reverse=True)
+
+    for player in sortatut_suomalaiset_players:
+        print(player)
 
 if __name__ == "__main__":
     main()
