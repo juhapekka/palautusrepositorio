@@ -3,6 +3,7 @@ from repositories.user_repository import (
     user_repository as default_user_repository
 )
 
+import re
 
 class UserInputError(Exception):
     pass
@@ -42,5 +43,16 @@ class UserService:
 
         # toteuta loput tarkastukset tänne ja nosta virhe virhetilanteissa
 
+        if len(username) < 3:
+            raise UserInputError("Username must be at least three characters long")
+
+        if password!= password_confirmation:
+            raise UserInputError("Passwords do not match")
+        
+        if len(password) < 8:
+            raise UserInputError("Password must be at least eight characters long")
+
+        if password.isalpha():
+            raise UserInputError("Password must contain at least one non-letter character")
 
 user_service = UserService()
