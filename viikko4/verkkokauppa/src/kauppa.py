@@ -17,7 +17,8 @@ class Kauppa:
         self._varasto.palauta_varastoon(tuote)
 
     def lisaa_koriin(self, id):
-        if self._varasto.saldo(id) > 0:
+        sald0 = self._varasto.saldo(id)
+        if sald0 != None and sald0 > 0:
             tuote = self._varasto.hae_tuote(id)
             self._ostoskori.lisaa(tuote)
             self._varasto.ota_varastosta(tuote)
