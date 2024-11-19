@@ -7,4 +7,4 @@ Retrospektiivi on tiimin tapaaminen milestonen/iteraation/sprintin päätteeksi,
 ##Glad, Sad, Mad
 **Glad, Sad, Mad** on yksinkertainen retrospektiivi jossa tiimin jäsenet jakavat tuntemuksiaan kolmen kategorian kautta: mikä teki heidät iloiseksi, surulliseksi tai vihaiseksi. Tämä menetelmä tarjoaa suoraviivaisen tavan tunnistaa konkreettiset parannuskohteet ilman ylimääräisiä elementtejä.
 
-muutos tehtävään 6
+muutos tehtävään 6 ..
