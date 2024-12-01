@@ -14,8 +14,12 @@ class Summa:
         self._lue_syote = lue_syote
 
     def suorita(self):
+        self.arvo_ennen = self._sovelluslogiikka.arvo()
         arvo = self._lue_syote()
         self._sovelluslogiikka.plus(arvo)
+
+    def kumoa(self):
+        self._sovelluslogiikka.aseta_arvo(self.arvo_ennen)
 
 
 class Erotus:
@@ -24,8 +28,12 @@ class Erotus:
         self._lue_syote = lue_syote
 
     def suorita(self):
+        self.arvo_ennen = self._sovelluslogiikka.arvo()
         arvo = self._lue_syote()
         self._sovelluslogiikka.miinus(arvo)
+
+    def kumoa(self):
+        self._sovelluslogiikka.aseta_arvo(self.arvo_ennen)
 
 
 class Nollaus:
@@ -34,6 +42,9 @@ class Nollaus:
 
     def suorita(self):
         self._sovelluslogiikka.nollaa()
+
+    def kumoa(self):
+        pass
 
 
 class Kumoa:
@@ -47,12 +58,12 @@ class Kayttoliittyma:
     def __init__(self, sovelluslogiikka, root):
         self._sovelluslogiikka = sovelluslogiikka
         self._root = root
+        self.edellinen_komento = None
 
         self._komennot = {
             Komento.SUMMA: Summa(sovelluslogiikka, self._lue_syote),
             Komento.EROTUS: Erotus(sovelluslogiikka, self._lue_syote),
             Komento.NOLLAUS: Nollaus(sovelluslogiikka, self._lue_syote),
-            Komento.KUMOA: Kumoa(sovelluslogiikka, self._lue_syote) # ei ehkä tarvita täällä...
         }
 
     def _lue_syote(self):
@@ -103,9 +114,17 @@ class Kayttoliittyma:
 
     def _suorita_komento(self, komento):
         if komento in self._komennot:
+            self.edellinen_komento = self._komennot[komento]
             self._komennot[komento].suorita()
 
-        self._kumoa_painike["state"] = constants.NORMAL
+        if komento == Komento.KUMOA and self.edellinen_komento != None:
+            self.edellinen_komento.kumoa()
+
+        if komento == Komento.NOLLAUS or komento == Komento.KUMOA:
+            self.edellinen_komento = None
+            self._kumoa_painike["state"] = constants.DISABLED
+        else:
+            self._kumoa_painike["state"] = constants.NORMAL
 
         if self._sovelluslogiikka.arvo() == 0:
             self._nollaus_painike["state"] = constants.DISABLED
