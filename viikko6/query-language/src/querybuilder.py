@@ -24,3 +24,6 @@ class QueryBuilder():
         
     def build(self):
         return self._matcher
+    
+    def one_of(self, *args):
+        return QueryBuilder(Or(*args))
