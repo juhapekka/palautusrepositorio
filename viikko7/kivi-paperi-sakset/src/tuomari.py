@@ -6,8 +6,15 @@ class Tuomari:
         self.tokan_pisteet = 0
         self.tasapelit = 0
 
+        # Sanakirja siitä mikä siirto voittaa
+        self.voittorulet = {
+            "k": "s",  # kivi voittaa sakset
+            "s": "p",  # sakset voittaa paperin
+            "p": "k",  # paperi voittaa kiven
+        }
+
     def kirjaa_siirto(self, ekan_siirto, tokan_siirto):
-        if self._tasapeli(ekan_siirto, tokan_siirto):
+        if ekan_siirto == tokan_siirto:
             self.tasapelit = self.tasapelit + 1
         elif self._eka_voittaa(ekan_siirto, tokan_siirto):
             self.ekan_pisteet = self.ekan_pisteet + 1
@@ -17,20 +24,6 @@ class Tuomari:
     def __str__(self):
         return f"Pelitilanne: {self.ekan_pisteet} - {self.tokan_pisteet}\nTasapelit: {self.tasapelit}"
 
-    # sisäinen metodi, jolla tarkastetaan tuliko tasapeli
-    def _tasapeli(self, eka, toka):
-        if eka == toka:
-            return True
-
-        return False
-
     # sisäinen metodi joka tarkastaa voittaako eka pelaaja tokan
     def _eka_voittaa(self, eka, toka):
-        if eka == "k" and toka == "s":
-            return True
-        elif eka == "s" and toka == "p":
-            return True
-        elif eka == "p" and toka == "k":
-            return True
-
-        return False
+        return self.voittorulet.get(eka) == toka
